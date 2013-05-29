@@ -73,7 +73,7 @@ module.exports = function(grunt) {
     qunit: {
       all: {
         options: {
-           urls: [].concat(mapToUrl('tests/**/*.html'))
+           urls: [].concat(mapToUrl('tests/**/*Test.html'))
         }
       },
       options: {
