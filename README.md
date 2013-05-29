@@ -1,5 +1,7 @@
 # qunit-assert
 
+[![Build Status](https://travis-ci.org/pscheit/qunit-assert.png?branch=master)](https://travis-ci.org/pscheit/qunit-assert)
+
 More complex assertions for QUnit.  
 
 ## introduction
