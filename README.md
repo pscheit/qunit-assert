@@ -103,7 +103,18 @@ asserts that the actualObject is a jQuery object.
 
 #### assertjQueryLength(length, actualJQueryObject[, message])
 
-asserts that the actualObject is jQuery object and has the length.
+asserts that the `actualjQueryObject` is an jQuery object and has the given `length`. For your convenience this assertion is chainable:
+
+```javascript
+  test("an accordion was rendered", function () {
+    var that = setup(this);
+  
+    var $content = that.assertjQueryLength(1, $('body div#content'));
+    var $accordion = that.assertjQueryLength(1, $content.find('div.psc-cms-ui-accordion'), 'accordion was rendered');
+    
+    // ...
+  });
+```
 
 #### assertjQueryLengthGT()
 
@@ -111,7 +122,12 @@ asserts that the actualObject is jQuery object and has the length greater than t
 
 #### assertjQueryHasClass(expectedClass, jQueryObject[, message])
 #### assertjQueryHasNotClass(expectedClass, jQueryObject[, message])
+
 #### assertjQueryIs(expectedSelector, jQueryObject[, message])
+
+```javascript
+  that.assertjQueryIs(':visible', $button);
+```
 
 #### assertjQueryHasWidget(expectedName, jQueryObject[, message])
 
