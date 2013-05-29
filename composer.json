@@ -1,0 +1,19 @@
+{
+  "name": "pscheit/qunit-assert",
+  "type": "library",
+  "description": "More complex assertions for QUnit",
+  "keywords": ["qunit", "assertions"],
+  "homepage": "https://github.com/pscheit/qunit-assert",
+  "license": "MIT",
+  "authors": [
+    {"name": "Philipp Scheit", "email": "p.scheit@ps-webforge.com"}
+  ],
+  "require": {
+  },
+  "require-dev": {
+  },
+  "minimum-stability": "dev",
+  "config": {
+    "vendor-dir": "composer/"
+  }
+}
