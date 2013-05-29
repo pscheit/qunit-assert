@@ -171,5 +171,5 @@ define(['qunit-assert'], function (t) {
 
     that.assertEmptyObject({'notEmpty':'yes'});
     that.assertPushed(1, false);
-  })
+  });
 });

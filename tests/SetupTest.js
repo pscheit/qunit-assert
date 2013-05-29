@@ -1,6 +1,6 @@
 define(['qunit-assert'], function (t) {
   
-  module("Setup");
+  QUnit.module("Setup");
 
   var setup = function (test) {
     return t.setup({someVar: true});
@@ -36,6 +36,7 @@ define(['qunit-assert'], function (t) {
       'assertType',
       'assertEmptyObject',
       'assertInstanceOf',
+      'assertJooseInstanceOf',
       'assertJooseDoesRole',
 
       // deprecated
