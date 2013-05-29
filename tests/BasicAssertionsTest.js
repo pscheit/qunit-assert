@@ -217,7 +217,7 @@ define(['qunit-assert'], function (t) {
         that.assertInstanceOf(data[1], data[0], that.debug(data[0])+" isInstanceof "+that.debug(data[1]));
 
         that.fail('no error thrown');
-      } catch (e) {
+      } catch (ex) {
         that.ok("error was thrown");
       }
     }
