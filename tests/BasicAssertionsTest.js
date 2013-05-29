@@ -172,4 +172,54 @@ define(['qunit-assert'], function (t) {
     that.assertEmptyObject({'notEmpty':'yes'});
     that.assertPushed(1, false);
   });
+
+  test("isInstanceOf asserts constructor of object instances", function() {
+    var that = setup(this);
+    var Something = function () { this.prop = 'value'; };
+    var e = new Error('wuah');
+    var o = {};
+    var a = [];
+    
+    var positiveValues = [
+      [e, Error],
+      [new Something(), Something]
+    ];
+    
+    var negativeValues = [
+      [e, Something],
+      [{ most: 'important' }, Something],
+      [a, Error],
+      [o, Error]
+    ];
+
+    var failingValues = [
+      ['eins', Error],
+      [7, Error]
+    ];
+    
+    var data;
+    for (var i = 0; i < positiveValues.length; i++) {
+      data = positiveValues[i];
+      that.assertInstanceOf(data[1], data[0], that.debug(data[0])+" isInstanceof "+that.debug(data[1]));
+      that.assertPushed(i, true);
+    }
+
+    for (i = 0; i < negativeValues.length; i++) {
+      data = negativeValues[i];
+      that.assertInstanceOf(data[1], data[0], that.debug(data[0])+" isInstanceof "+that.debug(data[1]));
+      that.assertPushed(i+positiveValues.length, false);
+    }
+
+    for (i = 0; i < failingValues.length; i++) {
+      data = failingValues[i];
+
+      try {
+        that.assertInstanceOf(data[1], data[0], that.debug(data[0])+" isInstanceof "+that.debug(data[1]));
+
+        that.fail('no error thrown');
+      } catch (e) {
+        that.ok("error was thrown");
+      }
+    }
+  });
 });

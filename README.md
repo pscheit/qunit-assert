@@ -150,3 +150,4 @@ that.assertjQuery($object).length(3).hasClass('active').is(':visible');
 
 * rewrite `assertInstanceOf` because its only Joose related right know.  
 * make Joose and Knockout assertions only avaible when Joose or Knockout is avaible (are we able to check this with require?)
+* increase test coverage
