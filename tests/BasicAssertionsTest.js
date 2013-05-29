@@ -30,6 +30,16 @@ define(['qunit-assert'], function (t) {
           message: message
         });
       };
+
+      this.equiv = function() {
+        return QUnit.equiv.apply(arguments);
+      };
+
+      this.jsDump = {
+        parse: function(obj) {
+          return QUnit.jsDump.parse(obj);
+        }
+      };
     };
 
     // inject
@@ -46,10 +56,10 @@ define(['qunit-assert'], function (t) {
       assertPushed: function (index, result, message) {
         var pushed = this.getPushed(index);
 
-        QUnit.equal(result, pushed.result);
+        QUnit.equal(result, pushed.result, "pushed result does not equal");
 
         if (arguments.length >= 3) {
-          QUnit.equal(message, pushed.message);
+          QUnit.equal(message, pushed.message, "pushed message does not equal");
         }
       }
     });
@@ -67,9 +77,99 @@ define(['qunit-assert'], function (t) {
   test("ok pushes a success to QUnit", function() {
     var that = setup(this);
 
-    that.ok(true, "this is the ok message");
+    that.ok("this is the ok message");
 
     that.assertPushedLength(1);
     that.assertPushed(0, true, "this is the ok message");
   });
+
+  test("assertEquals works like equal()", function () {
+    var that = setup(this);
+
+    var equations = [
+      [true, true],
+      ["string", "string"],
+      [1, 1],
+      [true, 1]
+    ];
+
+    for (var i = 0; i < equations.length; i++) {
+      QUnit.equal(equations[i][1], equations[i][0], 'equation #'+i);
+      that.assertEquals(equations[i][1], equations[i][0], 'equation #'+i);
+    }
+  });
+
+  test("assertTrue checks if a value is boolean true", function () {
+    var that = setup(this);
+
+    that.assertTrue(true, "true is true");
+    that.assertTrue(false, "false is true");
+
+    that.assertPushedLength(2);
+    that.assertPushed(0, true, "asserted that true is true");
+    that.assertPushed(1, false, "failed asserting that false is true");
+  });
+
+  test("assertFalse checks if a value is boolean false", function () {
+    var that = setup(this);
+
+    that.assertFalse(false, "false is false");
+    that.assertFalse(true, "true is false");
+
+    that.assertPushedLength(2);
+    that.assertPushed(0, true, "asserted that false is false");
+    that.assertPushed(1, false, "failed asserting that true is false");
+  });
+
+  test("assertType checks if a value is from type- positives", function () {
+    var that = setup(this);
+
+    var conditions = [
+      ["string", "a string"],
+      ["number", 7],
+      ["integer", 7],
+      ["object", {}],
+      ["array", []],
+      ["float", 0.93],
+      ["object", []],
+      ["boolean", true],
+      ["boolean", false]
+    ];
+
+    for (var i = 0; i < conditions.length; i++) {
+      that.assertType(conditions[i][0], conditions[i][1]);
+
+      that.assertPushed(i, true);
+    }
+  });
+
+  test("assertType checks if a value is from type- negatives", function () {
+    var that = setup(this);
+
+    var conditions = [
+      ["blubb", "a string"],
+      ["float", 7],
+      ["integer", 0.93],
+      ["array", {}],
+      ["boolean", 1],
+      ["boolean", 0],
+      ["boolean", undefined]
+    ];
+
+    for (var i = 0; i < conditions.length; i++) {
+      that.assertType(conditions[i][0], conditions[i][1], 'conditions #'+i);
+
+      that.assertPushed(i, false);
+    }
+  });
+
+  test("emptyObject tests if the actual is an empty object without properties", function () {
+    var that = setup(this);
+
+    that.assertEmptyObject({});
+    that.assertPushed(0, true);
+
+    that.assertEmptyObject({'notEmpty':'yes'});
+    that.assertPushed(1, false);
+  })
 });

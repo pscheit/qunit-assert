@@ -36,6 +36,9 @@ define(['qunit-assert'], function (t) {
       'assertType',
       'assertEmptyObject',
       'assertInstanceOf',
+      'assertJooseDoesRole',
+
+      // deprecated
       'assertDoesRole'
     ];
 
