@@ -1,0 +1,16 @@
+{
+  "name": "qunit-assert",
+  "version": "1.0.0",
+  "main": ["lib/assert.js", "lib/TestRunner.js", "css/tests.css"],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.8.3"
+  }
+}
