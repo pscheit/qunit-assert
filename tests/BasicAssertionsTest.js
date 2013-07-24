@@ -49,6 +49,7 @@ define(['qunit-assert'], function (t) {
       assertPushedLength: function (length) {
         QUnit.equal(stack.length, length, length+' assertions were pushed');
       },
+
       getPushed: function(index) {
         return stack[index];
       },
@@ -56,10 +57,10 @@ define(['qunit-assert'], function (t) {
       assertPushed: function (index, result, message) {
         var pushed = this.getPushed(index);
 
-        QUnit.equal(result, pushed.result, "pushed result does not equal");
+        QUnit.equal(result, pushed.result, "pushed result does equal");
 
         if (arguments.length >= 3) {
-          QUnit.equal(message, pushed.message, "pushed message does not equal");
+          QUnit.equal(message, pushed.message, "pushed message does equal");
         }
       }
     });
@@ -222,4 +223,31 @@ define(['qunit-assert'], function (t) {
       }
     }
   });
+
+  test("assertContains checks if string is contained in actual", function () {
+    var that = setup(this);
+
+    var i = 0;
+
+    that.assertContains("function () {", "something that contains function () { in string.");
+    that.assertPushed(i++, true);
+
+    that.assertContains("something", "something that contains function () { in string.");
+    that.assertPushed(i++, true);
+
+    that.assertContains(".", "something that contains function () { in string.");
+    that.assertPushed(i++, true);
+
+    // falsys
+    that.assertContains(".", "something that contains function () { in string");
+    that.assertPushed(i++, false);
+
+    that.assertContains("function () {", "something that does not contains function ()  in string.");
+    that.assertPushed(i++, false);
+
+    that.assertPushedLength(i);
+
+    console.log(that.getPushed());
+  });
+
 });
