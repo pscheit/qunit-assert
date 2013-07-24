@@ -246,8 +246,6 @@ define(['qunit-assert'], function (t) {
     that.assertPushed(i++, false);
 
     that.assertPushedLength(i);
-
-    console.log(that.getPushed());
   });
 
 });
