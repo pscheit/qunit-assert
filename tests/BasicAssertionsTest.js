@@ -248,4 +248,23 @@ define(['qunit-assert'], function (t) {
     that.assertPushedLength(i);
   });
 
+  test("assertUndefined and assertNotUndefined test for the undefined constant", function () {
+    var that = setup(this);
+
+    var i = 0;
+
+    that.assertUndefined(undefined);
+    that.assertPushed(i++, true);
+
+    that.assertUndefined(false);
+    that.assertPushed(i++, false);
+
+    that.assertNotUndefined(false);
+    that.assertPushed(i++, true);
+
+    that.assertNotUndefined(undefined);
+    that.assertPushed(i++, false);
+
+    that.assertPushedLength(i);
+  });
 });
