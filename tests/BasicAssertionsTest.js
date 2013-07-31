@@ -32,7 +32,7 @@ define(['qunit-assert'], function (t) {
       };
 
       this.equiv = function() {
-        return QUnit.equiv.apply(arguments);
+        return QUnit.equiv.apply(this, arguments);
       };
 
       this.jsDump = {
@@ -57,10 +57,10 @@ define(['qunit-assert'], function (t) {
       assertPushed: function (index, result, message) {
         var pushed = this.getPushed(index);
 
-        QUnit.equal(result, pushed.result, "pushed result does equal");
+        QUnit.equal(pushed.result, result, "pushed result does equal");
 
         if (arguments.length >= 3) {
-          QUnit.equal(message, pushed.message, "pushed message does equal");
+          QUnit.equal(pushed.message, message, "pushed message does equal");
         }
       }
     });
@@ -97,6 +97,26 @@ define(['qunit-assert'], function (t) {
     for (var i = 0; i < equations.length; i++) {
       QUnit.equal(equations[i][1], equations[i][0], 'equation #'+i);
       that.assertEquals(equations[i][1], equations[i][0], 'equation #'+i);
+    }
+  });
+
+  test("assertNotEquals works the opposite like equal()", function () {
+    var that = setup(this);
+
+    var equations = [
+      [true, false],
+      ["string", "ostring"],
+      [2, 1],
+      [true, false],
+      [true, 0],
+      [false, 1],
+      [0, true],
+      [1, false]
+    ];
+
+    for (var i = 0; i < equations.length; i++) {
+      that.assertNotEquals(equations[i][1], equations[i][0], 'equation #'+i);
+      that.assertPushed(i, true);
     }
   });
 
